@@ -1,0 +1,541 @@
+/* =============================================================
+   ALPHA MINNESOTA — style.css
+   Targets semantic HTML only. No class names required.
+   Link from index.html <head>:
+     <link rel="stylesheet" href="/style.css">
+   ============================================================= */
+
+
+/* ── Google Fonts ─────────────────────────────────────────────
+   Lora        — warm, editorial serif for headings
+   Source Sans 3 — humanist, readable sans for body
+   ──────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;500;600&display=swap');
+
+
+/* ── Design tokens ────────────────────────────────────────────  */
+:root {
+  --ink:        #1a2028;       /* near-black for body text */
+  --ink-light:  #4a5568;       /* secondary text, captions */
+  --canvas:     #faf9f6;       /* warm off-white background */
+  --surface:    #f2f0eb;       /* slightly deeper for section alternates */
+  --border:     #dedad2;       /* subtle dividers */
+  --green:      #2d5a3d;       /* deep forest green — primary accent */
+  --green-mid:  #3d7a55;       /* hover state */
+  --green-pale: #e8f2ec;       /* light tint for callout backgrounds */
+  --red-ink:    #8b1a1a;       /* used sparingly for alarming stats */
+  --nav-height: 64px;
+  --max-width:  780px;
+  --font-serif: 'Lora', Georgia, serif;
+  --font-sans:  'Source Sans 3', system-ui, sans-serif;
+  --radius:     6px;
+}
+
+
+/* ── Reset & base ─────────────────────────────────────────────  */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 18px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-weight: 400;
+  line-height: 1.75;
+  /* Push content below the sticky nav */
+  padding-top: var(--nav-height);
+}
+
+
+/* ── Typography ───────────────────────────────────────────────  */
+h1, h2, h3, h4 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--ink);
+}
+
+h1 {
+  font-size: clamp(1.9rem, 4vw, 2.6rem);
+  margin-bottom: 1.25rem;
+}
+
+h2 {
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--green);
+}
+
+h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  letter-spacing: 0.01em;
+  color: var(--green);
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+p {
+  margin-bottom: 1.1rem;
+  max-width: 68ch;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+strong {
+  font-weight: 600;
+}
+
+em {
+  font-style: italic;
+}
+
+small {
+  font-size: 0.78rem;
+  color: var(--ink-light);
+  display: block;
+  margin-top: 0.4rem;
+  line-height: 1.5;
+}
+
+abbr[title] {
+  text-decoration: none;
+  color: var(--ink-light);
+}
+
+
+/* ── Links ────────────────────────────────────────────────────  */
+a {
+  color: var(--green);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: color 0.15s ease;
+}
+
+a:hover {
+  color: var(--green-mid);
+}
+
+
+/* ── Lists ────────────────────────────────────────────────────  */
+main ul,
+main ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+main li {
+  margin-bottom: 0.45rem;
+  max-width: 66ch;
+}
+
+
+/* ── Layout container (reusable inner wrapper) ────────────────
+   Applied via a universal selector on direct children of
+   header nav, main sections, and footer — keeps HTML clean.
+   ──────────────────────────────────────────────────────────── */
+header nav,
+main > section,
+footer {
+  width: 100%;
+  max-width: calc(var(--max-width) + 4rem);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+
+/* ── Header & Navigation ──────────────────────────────────────  */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--nav-height);
+  background-color: var(--green);
+  z-index: 100;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.18);
+  display: flex;
+  align-items: center;
+}
+
+header nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  height: 100%;
+  /* override the vertical padding from the general rule */
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* Site title / logo link */
+header nav > a {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1rem;
+  color: #fff;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  letter-spacing: 0.01em;
+}
+
+header nav > a:hover {
+  color: rgba(255,255,255,0.8);
+}
+
+/* Nav link list */
+header nav > ul {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0 auto;
+}
+
+header nav > ul li {
+  margin: 0;
+}
+
+header nav > ul a {
+  display: inline-block;
+  padding: 0.3rem 0.65rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: rgba(255,255,255,0.88);
+  text-decoration: none;
+  border-radius: var(--radius);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+header nav > ul a:hover {
+  background-color: rgba(255,255,255,0.15);
+  color: #fff;
+}
+
+/* "Join Us" nav link — slightly more prominent */
+header nav > ul li:last-child a {
+  background-color: rgba(255,255,255,0.18);
+  color: #fff;
+  font-weight: 600;
+}
+
+header nav > ul li:last-child a:hover {
+  background-color: rgba(255,255,255,0.3);
+}
+
+
+/* ── Main sections ────────────────────────────────────────────  */
+main > section {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+  max-width: var(--max-width);
+}
+
+/* Alternate background for every other content section */
+main > section:nth-child(even) {
+  background-color: transparent;
+}
+
+/* Hero section — a bit more vertical breathing room */
+main > section:first-of-type {
+  padding-top: 4.5rem;
+  padding-bottom: 4rem;
+  border-bottom: 1px solid var(--border);
+}
+
+main > section:first-of-type h1 {
+  font-style: italic;
+  color: var(--green);
+}
+
+/* Divider between sections */
+main > section + section {
+  border-top: 1px solid var(--border);
+}
+
+/* Hero CTA links — make the primary one look like a button */
+main > section:first-of-type > p:last-child > a:first-child {
+  display: inline-block;
+  background-color: var(--green);
+  color: #fff;
+  text-decoration: none;
+  padding: 0.6rem 1.3rem;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background-color 0.15s ease;
+  margin-right: 0.5rem;
+}
+
+main > section:first-of-type > p:last-child > a:first-child:hover {
+  background-color: var(--green-mid);
+}
+
+
+/* ── The Problem section — stat callouts ──────────────────────
+   Each h3 + following p + small gets subtle visual treatment
+   ──────────────────────────────────────────────────────────── */
+#the-problem h3 {
+  position: relative;
+  padding-left: 1rem;
+}
+
+#the-problem h3::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.15em;
+  bottom: 0.1em;
+  width: 3px;
+  background-color: var(--green);
+  border-radius: 2px;
+}
+
+
+/* ── Outcomes section — stat list styling ─────────────────────  */
+#outcomes ul {
+  list-style: none;
+  padding-left: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+}
+
+#outcomes ul li {
+  padding: 0.7rem 1.1rem;
+  border-bottom: 1px solid var(--border);
+  max-width: none;
+  line-height: 1.5;
+}
+
+#outcomes ul li:last-child {
+  border-bottom: none;
+}
+
+#outcomes ul li:nth-child(odd) {
+  background-color: var(--green-pale);
+}
+
+
+/* ── Join section — form ──────────────────────────────────────  */
+#join {
+  background-color: var(--surface);
+}
+
+#join form {
+  margin-top: 1.75rem;
+  margin-bottom: 1.75rem;
+}
+
+#join fieldset {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.75rem 2rem;
+  background: #fff;
+}
+
+#join legend {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0 0.5rem;
+  color: var(--ink-light);
+}
+
+#join label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  margin-top: 1.1rem;
+  margin-bottom: 0.3rem;
+  color: var(--ink);
+}
+
+#join input,
+#join textarea {
+  display: block;
+  width: 100%;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--ink);
+  background: var(--canvas);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.55rem 0.8rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  outline: none;
+}
+
+#join input:focus,
+#join textarea:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(45, 90, 61, 0.12);
+}
+
+#join textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+#join button[type="submit"] {
+  margin-top: 1.5rem;
+  display: inline-block;
+  background-color: var(--green);
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.7rem 1.75rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  letter-spacing: 0.01em;
+}
+
+#join button[type="submit"]:hover {
+  background-color: var(--green-mid);
+}
+
+
+/* ── Founding Families section — benefit list ─────────────────  */
+#founding-families ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+#founding-families ul li {
+  padding-left: 1.6rem;
+  position: relative;
+  margin-bottom: 0.6rem;
+  max-width: 62ch;
+}
+
+#founding-families ul li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  top: 0.05em;
+  color: var(--green);
+  font-weight: 700;
+}
+
+
+/* ── Resources section ────────────────────────────────────────  */
+#resources ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+#resources ul li {
+  padding-left: 1.2rem;
+  position: relative;
+  margin-bottom: 0.4rem;
+}
+
+#resources ul li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--green);
+  font-size: 0.9em;
+}
+
+
+/* ── Footer ───────────────────────────────────────────────────  */
+footer {
+  background-color: var(--ink);
+  color: rgba(255,255,255,0.65);
+  font-size: 0.82rem;
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+  max-width: 100%;
+  line-height: 1.6;
+}
+
+footer p {
+  max-width: 60ch;
+  margin-bottom: 0.5rem;
+}
+
+/* Footer nav — flat inline links */
+footer > nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  margin-bottom: 1.5rem;
+  padding: 0;
+  max-width: none;
+}
+
+footer > nav a {
+  color: rgba(255,255,255,0.75);
+  font-size: 0.82rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+footer > nav a:hover {
+  color: #fff;
+}
+
+
+/* ── Scroll margin for anchor targets (clears sticky nav) ─────  */
+section[id],
+h2[id] {
+  scroll-margin-top: calc(var(--nav-height) + 1rem);
+}
+
+
+/* ── Responsive ───────────────────────────────────────────────  */
+@media (max-width: 700px) {
+  html {
+    font-size: 16px;
+  }
+
+  header nav > ul {
+    display: none; /* hide nav links on small screens; add a hamburger later if needed */
+  }
+
+  header nav > a {
+    font-size: 0.95rem;
+  }
+
+  header nav,
+  main > section,
+  footer {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  main > section {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  #join fieldset {
+    padding: 1.25rem;
+  }
+}
