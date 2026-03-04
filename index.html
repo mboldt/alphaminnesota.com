@@ -253,6 +253,34 @@
       <p>We are an independent parent-led community group. We are not affiliated with or employed by Alpha School. Alpha School is a registered trademark of its respective owners. All statistics cited on this page link to their original sources.</p>
     </footer>
 
+    <script>
+      (function () {
+        var nav = document.querySelector('header nav');
+        var ul  = nav.querySelector('ul');
+
+        var btn = document.createElement('button');
+        btn.id = 'nav-toggle';
+        btn.setAttribute('aria-label', 'Toggle navigation menu');
+        btn.setAttribute('aria-expanded', 'false');
+        btn.setAttribute('aria-controls', 'nav-links');
+        btn.innerHTML = '<span></span><span></span><span></span>';
+
+        ul.id = 'nav-links';
+        nav.insertBefore(btn, ul);
+
+        btn.addEventListener('click', function () {
+          var isOpen = ul.classList.toggle('is-open');
+          btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+
+        ul.querySelectorAll('a').forEach(function (link) {
+          link.addEventListener('click', function () {
+            ul.classList.remove('is-open');
+            btn.setAttribute('aria-expanded', 'false');
+          });
+        });
+      })();
+    </script>
   </body>
 </html>
 

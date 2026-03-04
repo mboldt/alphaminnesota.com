@@ -509,18 +509,115 @@ h2[id] {
 }
 
 
+/* ── Hamburger button (CSS-only, injected via JS) ─────────────
+   We inject a <button> before the <ul> via a small inline script
+   in the CSS comment below — see the <script> block note.
+   The button uses a pure CSS animated icon.
+   ──────────────────────────────────────────────────────────── */
+
+/* The toggle button itself — hidden on desktop */
+#nav-toggle {
+  display: none;
+}
+
 /* ── Responsive ───────────────────────────────────────────────  */
-@media (max-width: 700px) {
+@media (max-width: 800px) {
   html {
     font-size: 16px;
   }
 
-  header nav > ul {
-    display: none; /* hide nav links on small screens; add a hamburger later if needed */
+  header {
+    height: auto;
+    min-height: var(--nav-height);
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  header nav {
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    min-height: var(--nav-height);
   }
 
   header nav > a {
     font-size: 0.95rem;
+    line-height: var(--nav-height);
+  }
+
+  /* Hamburger button */
+  #nav-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    margin-left: auto;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    height: var(--nav-height);
+    width: 44px;
+    flex-shrink: 0;
+  }
+
+  #nav-toggle span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 2px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    transform-origin: center;
+  }
+
+  /* Animate to X when open */
+  #nav-toggle[aria-expanded="true"] span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  #nav-toggle[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+  }
+  #nav-toggle[aria-expanded="true"] span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* Nav link list — collapsed by default on mobile */
+  header nav > ul {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background-color: var(--green);
+    padding: 0.5rem 0 1rem;
+    gap: 0;
+    margin: 0;
+    border-top: 1px solid rgba(255,255,255,0.15);
+  }
+
+  header nav > ul.is-open {
+    display: flex;
+  }
+
+  header nav > ul li {
+    width: 100%;
+  }
+
+  header nav > ul a {
+    display: block;
+    width: 100%;
+    padding: 0.7rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 0;
+  }
+
+  /* Override the special "Join Us" pill on mobile */
+  header nav > ul li:last-child a {
+    background-color: transparent;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    margin-top: 0.25rem;
+    padding-top: 0.95rem;
   }
 
   header nav,
@@ -537,5 +634,9 @@ h2[id] {
 
   #join fieldset {
     padding: 1.25rem;
+  }
+
+  body {
+    padding-top: var(--nav-height);
   }
 }
